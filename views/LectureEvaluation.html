@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>C간표 - 강의 평가</title>
+  <!-- Bootstrap core CSS-->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <!-- Page level plugin CSS-->
+  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+  <script>
+  //데이터를 ejs엔진 형식으로 가져옴
+  var cw = JSON.parse('<%- JSON.stringify(cw) %>'); </script>
+  <!-- 메인화면 네비게이션 바-->
+  <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+    <!-- 메뉴아이콘--><a class="navbar-brand mr-1" href="Main.html">C간표</a>
+    <!-- 타이틀 네임 임의로 메뉴바와 위치를 바꾸었음-->
+    <!-- Navbar Search-->
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0"></form>
+    <!-- Navbar-->
+    <ul class="navbar-nav ml-auto ml-md-0">
+      <!-- 로그인 아이콘 조절-->
+      <li class="nav-item dropdown no-arrow"><a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle fa-fw"></i></a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown"><a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a></div>
+      </li>
+    </ul>
+  </nav>
+  <div id="wrapper">
+    <!-- Sidebar-->
+    <ul class="sidebar navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="Main.html">
+          <i class="fas fa-fw fa-calendar-check"></i>
+          <span>나의 시간표</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Curriculum.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>커리큘럼</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="LectureEvaluation.html">
+          <i class="fas fa-fw fa-book-reader"></i>
+          <span>강의 평가</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-fw fa-user-friends"></i>
+          <span>게시판</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <a class="dropdown-item" href="FreeC.html">자유 게시판</a>
+          <a class="dropdown-item" href="Q&AC.html">Q&A게시판</a>
+        </div>
+      </li>
+    </ul>
+    <div id="content-wrapper">
+      <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="Main.html">나의 시간표</a></li>
+          <li class="breadcrumb-item active">강의평가</li>
+        </ol>
+        <!-- Page Content-->
+
+        <div class="card">
+          <form  action="LectureEvaluation.html">
+          <ul>
+            <!-- 강의 평가를 등록하거나 검색하기 위해 교수님을 선택하는 메뉴-->
+            <li class="no-display">
+              <div class="form-group">
+                <select name="pro" class="custom-select">
+                  <option selected="" value="" >교수님을 선택해 주세요.</option>
+                  <option value="김상운">김상운 교수님</option>
+                  <option value="장희정">장희정 교수님</option>
+                  <option value="김상귀">김상귀 교수님</option>
+                </select>
+              </div>
+            </li>
+            <!-- 강의평가를 등록하거나 검색하기 위해 과목을 선택하는 메뉴-->
+            <li class="no-display">
+              <div class="form-group">
+                <select name="sub" class="custom-select">
+                  <option selected="" value="" >과목을 선택해 주세요.</option>
+                  <option value="팀 프로젝트1">팀 프로젝트1</option>
+                  <option value="고급 객체지향 프로그래밍">고급 객체지향 프로그래밍</option>
+                  <option value="웹 프로그래밍">웹 프로그래밍</option>
+                </select>
+              </div>
+            </li>
+          </ul>
+          <div>
+            <!-- 강의 평가를 작성하는 페이지로 이동하는 버튼 - 교수님과 과목 선택안함-->
+
+              <a class="btn btn-success" href="/LectureReview.html" type="button">평가 작성</a>
+
+            <!-- 선택한 교수님과 과목에 등록된 강의평가를 검색하는 버튼-->
+
+              <button class="btn btn-info" type="submit">검색</button>
+
+          </div>
+          </form>
+        </div>
+
+        <!-- 선택한 교수님과 과목에 대해 작성된 강의 평가를 보여주는 부분-->
+        <!-- 교수님과 과목을 선택하기 전에는 보이지 않음-->
+        <div class="card">
+          <!-- 선택한 교수님과 과목의 이름을 불러와서 제목을 바꿔주는 부분-->
+
+          <h3><small class="text-muted"><%=cw[0].pro%>교수님의 <%=cw[0].sub%> 강의 후기 입니다.</small></h3>
+          <table class="table table-hover">
+            <thead>
+              <tr class="table-title">
+                <th class="cols1" scope="row">번호</th>
+                <th class="cols2" scope="row">제 목</th>
+                <th class="cols3" scope="row">내 용</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(var i=0; i<cw.length; i++){ %>
+              <tr>
+                <td class="cols1"><%= i+1%></td>
+                <td class="cols2"><%= cw[i].title%></td>
+                <td class="cols3"><%= cw[i].write%></td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- /.container-fluid-->
+      <!-- Sticky Footer-->
+      <footer class="sticky-footer">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto"><span>Copyright © Your Website 2018</span></div>
+        </div>
+      </footer>
+    </div>
+    <!-- /.content-wrapper-->
+    <!-- /#wrapper-->
+    <!-- Scroll to Top Button--><a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button><a class="btn btn-primary" href="login">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
+  </div>
+</body>
+
+</html>

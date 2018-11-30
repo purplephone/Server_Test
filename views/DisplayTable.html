@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript">
+    let rad = document.getElementsByName('timeTable');
+  // let mjrarr = JSON.parse(localStorage.getItem("dataA"));
+  // let libarr = JSON.parse(localStorage.getItem("dataB"));
+  // let libsarr = JSON.parse(localStorage.getItem("dataC"));
+  // let optarr = JSON.parse(localStorage.getItem("Opt"));
+  let goBack = function(){
+    // alert(mjrarr);
+    // alert(libarr);
+    // alert(libsarr);
+    // alert(optarr);
+    for (let i = 0; i < rad.length; i++) {
+      if(rad[i].checked){
+        alert((i+1) + "번 째 시간표를 생성한다.");
+        localStorage.setItem("Rad", i);
+      }
+    }
+    opener.location = "Main.html";
+    self.close();
+  }
+    </script>
+  <style type="text/css">
+    table, tr, td{
+         border : 1px solid black;
+            text-align: center;
+            width: 100%;
+            height:50px;
+            }
+    h1{
+      text-align: center;
+    }
+ </style>
+  </head>
+  <body>
+    <h1>DisplayTT</h1>
+    <form class="" action="Main.html" method="get">
+    <table>
+      <thead>
+        <tr>
+          <td>옵션 무시 <input type="radio" name="timeTable" value=""></td>
+          <td>옵션 적용 <input type="radio" name="timeTable" value=""></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><iframe src="MTT_OPT.html" width="500" height="600"></iframe></td>
+          <td><iframe src="MTT_OPT.html" width ="500" height="600"></iframe></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3"><input type="button" name="" value="Create" onclick="goBack();"></td>
+        </tr>
+      </tfoot>
+    </table>
+    </form>
+  </body>
+</html>

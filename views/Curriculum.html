@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <script src = "js\dataContainer.js"></script>
+    <script type="text/javascript">
+    let ckbx_a = document.getElementsByClassName('a');
+      let ckbx_b = document.getElementsByClassName('b');
+      let ckbx_c = document.getElementsByClassName('c');
+      // 웹 브라우저가 닫혀도 만료되지 않는 저장소 => 닫아줘야 한다.
+      let mjr_arr = new Array(39);
+      let lib_arr = new Array(10);
+      let libs_arr = new Array(30);
+      // 주의! : localStorage로 함수 바깥에서 배열을 받으면 할당되지 않은 빈 배열이 저장된다.
+      let makePop = function(){
+        window.open("TableOption.html","","width=950, height=620, left=100, top=50");
+        for(let i = 0; i < ckbx_a.length; i++){
+          if(ckbx_a[i].checked){
+            mjr_arr[parseInt(ckbx_a[i].value)-1] = '1';
+          }else{
+            mjr_arr[parseInt(ckbx_a[i].value)-1] = '0';
+          }
+        }
+        for(let i = 0; i < ckbx_b.length; i++){
+          if(ckbx_b[i].checked){
+            lib_arr[parseInt(ckbx_b[i].value)-1] = '1';
+          }else{
+            lib_arr[parseInt(ckbx_b[i].value)-1] = '0';
+          }
+        }
+        for(let i = 0; i < ckbx_c.length; i++){
+          if(ckbx_c[i].checked){
+            libs_arr[parseInt(ckbx_c[i].value)-1] = '1';
+          }else{
+            libs_arr[parseInt(ckbx_c[i].value)-1] = '0';
+          }
+        }
+        localStorage.setItem("dataA", JSON.stringify(mjr_arr));
+        localStorage.setItem("dataB", JSON.stringify(lib_arr));
+        localStorage.setItem("dataC", JSON.stringify(libs_arr));
+      }
+
+
+    </script>
+    <title>Welcome to "C"간표</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+  </head>
+
+  <body id="page-top">
+
+    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+
+
+
+      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+        <i class="fas fa-bars"></i>
+      </button><!--메뉴아이콘-->
+  <a class="navbar-brand mr-1" href="Main.html">C간표</a>  <!--타이틀 네임 임의로 메뉴바와 위치를 바꾸었음-->
+      <!-- Navbar Search -->
+      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <div class="input-group">
+
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Navbar -->
+      <ul class="navbar-nav ml-auto ml-md-0">
+
+        <!--로그인 아이콘 조절-->
+        <li class="nav-item dropdown no-arrow">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user-circle fa-fw"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+          </div>
+        </li>
+      </ul>
+
+    </nav>
+
+    <div id="wrapper">
+<!--측면 보드 설정-->
+<!-- Sidebar -->
+<ul class="sidebar navbar-nav">
+  <li class="nav-item">
+    <a class="nav-link" href="Main.html">
+      <span>시간표</span>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="Curriculum.html">
+        <span>커리큘럼</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="LectureReview.html">
+      <!--<i class="fas fa-fw fa-table"></i>-->
+      <span>강의평가</span></a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false">
+      <!--아이콘 추가시 이 부분에 추-->
+      <span>게시판</span>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+      <h6 class="dropdown-header">게시판 메뉴 :</h6>
+      <a class="dropdown-item" href="Login.html">자유게시판</a>
+      <a class="dropdown-item" href="register.html">Q&A 게시판</a>
+      <a class="dropdown-item" href="forgot-password.html">강의평가 게시판</a>
+
+  </li>
+</ul>
+      <div id="content-wrapper">
+
+        <div class="container-fluid">
+          <!-- Page Content 페이지 최 상단부 메세지 -->
+          <h1>"Welcome to "C"간표
+            <INPUT type='BUTTON' value=' ' style="WIDTH: 30pt; HEIGHT: 30pt">
+          </h1>
+          <hr></hr>
+          <!--본문처리-->
+          <p>  </p>
+          <li>전공과목</li>
+          <!--<div>
+            <div style = "position:relative; top:-430px;left:55px;"><input type="checkbox">
+            </div>
+            <div style = "position:relative; top:-430px;left:0px;"><input type="checkbox">
+            </div>
+            <div style = "position:relative; top:-430px;left:100px;"><input type="checkbox">
+            </div>
+            <div style = "position:relative; top:-430px;left:100px;"><input type="checkbox">
+            </div>
+            <div style = "position:relative; top:-430px;left:55px;"><input type="checkbox">
+            </div>
+            <div style = "position:relative; top:-430px;left:0px;"><input type="checkbox">
+            </div>
+            <div style = "position:relative; top:-430px;left:100px;"><input type="checkbox">
+            </div>
+            <div style = "position:relative; top:-430px;left:100px;"><input type="checkbox">
+                </div>
+            </div>
+          -->
+          <style>
+                .tb1{
+                  width: 1270px;
+                  height:530px;
+                }
+                .tb1, .th1, .td1, .td2,.td3,.td4,.td5,.td6,.td7,.td8,.td9{
+                  border-right:none;
+
+
+                }
+                /*가로조절*/
+                .td1{
+                  width :45px;
+                }
+                .td2{
+                  width :100px;
+                }
+                .td3{
+                  width :100px;
+                }
+                .td4{
+                  width :100px;
+                }
+                .td5{
+                  width :100px;
+                }
+                .td6{
+                  width :100px;
+                }
+                .td7{
+                  width :100px;
+                }
+                .td8{
+                  width :100px;
+                }
+                .td9{
+                  width :100px;
+                }
+                /*세로조절*/
+                .tr1{height:60px;}
+                .tr2{height:50px;}
+                .tr3{height:45px;}
+                .tr4{height:50px;}
+                .tr5{height:50px;}
+                .tr6{height:50px;}
+                .tr7{height:50px;}
+                .tr8{height:50px;}
+                .tr9{height:50px;}
+                .tr10{height:50px;}
+
+          </style>
+
+              <table class = "tb1" background = "Cul.png" style="background-repeat:no-repeat" border ="0">
+                  <tbody>
+                    <tr class = "tr1">
+                      <td class="td1"></td>
+                      <td class="td2"></td>
+                      <td class="td3"></td>
+                      <td class="td4"></td>
+                      <td class="td5"></td>
+                      <td class="td6"></td>
+                      <td class="td7"></td>
+                      <td class="td8"></td>
+                      <td class="td9"></td>
+                    </tr>
+                    <tr class = "tr2">
+                        <td class="td1"></td>
+                        <td class="td2"><input type="checkbox" name="mjr" class="a" value="1"></td>
+                        <td class="td3"></td>
+                        <td class="td4"><input type="checkbox" name="mjr" class="a" value="2"></td>
+                        <td class="td5"></td>
+                        <td class="td6"></td>
+                        <td class="td7"><input type="checkbox" name="mjr" class="a" value="3"></td>
+                        <td class="td8"><input type="checkbox" name="mjr" class="a" value="4"></td>
+                        <td class="td9"></td>
+                      </tr>
+                      <tr class = "tr3">
+                        <td class="td1"></td>
+                        <td class="td2"></td>
+                        <td class="td3"></td>
+                        <td class="td4"></td>
+                        <td class="td5"><input type="checkbox" name="mjr" class="a" value="5"></td>
+                        <td class="td6"><input type="checkbox" name="mjr" class="a" value="6"></td>
+                        <td class="td7"><input type="checkbox" name="mjr" class="a" value="7"></td>
+                        <td class="td8"></td>
+                        <td class="td9"></td>
+                      </tr>
+                      <tr class = "tr4">
+                        <td class="td1"></td>
+                        <td class="td2"></td>
+                        <td class="td3"><input type="checkbox" name="mjr" class="a" value="8"></td>
+                        <td class="td4"><input type="checkbox" name="mjr" class="a" value="9"></td>
+                        <td class="td5"><input type="checkbox" name="mjr" class="a" value="10"></td>
+                        <td class="td6"><input type="checkbox" name="mjr" class="a" value="11"></td>
+                        <td class="td7"><input type="checkbox" name="mjr" class="a" value="12"></td>
+                        <td class="td8"><input type="checkbox" name="mjr" class="a" value="13"></td>
+                        <td class="td9"><input type="checkbox" name="mjr" class="a" value="14"></td>
+                      </tr>
+                      <tr class = "tr5">
+                        <td class="td1"></td>
+                        <td class="td2"></td>
+                        <td class="td3"></td>
+                        <td class="td4"><input type="checkbox" name="mjr" class="a" value="15"></td>
+                        <td class="td5"><input type="checkbox" name="mjr" class="a" value="16"></td>
+                        <td class="td6"><input type="checkbox" name="mjr" class="a" value="17"></td>
+                        <td class="td7"><input type="checkbox" name="mjr" class="a" value="18"></td>
+                        <td class="td8"><input type="checkbox" name="mjr" class="a" value="19"></td>
+                        <td class="td9"><input type="checkbox" name="mjr" class="a" value="20"></td>
+                      </tr>
+                      <tr class = "tr6">
+                        <td class="td1"></td>
+                        <td class="td2"></td>
+                        <td class="td3"></td>
+                        <td class="td4"></td>
+                        <td class="td5"><input type="checkbox" name="mjr" class="a" value="21"></td>
+                        <td class="td6"></td>
+                        <td class="td7"><input type="checkbox" name="mjr" class="a" value="22"></td>
+                        <td class="td8"><input type="checkbox" name="mjr" class="a" value="23"></td>
+                        <td class="td9"><input type="checkbox" name="mjr" class="a" value="24"></td>
+                      </tr>
+                      <tr class = "tr7">
+                        <td class="td1"></td>
+                        <td class="td2"></td>
+                        <td class="td3"></td>
+                        <td class="td4"></td>
+                        <td class="td5"></td>
+                        <td class="td6"><input type="checkbox" name="mjr" class="a" value="25"></td>
+                        <td class="td7"><input type="checkbox" name="mjr" class="a" value="26"></td>
+                        <td class="td8"><input type="checkbox" name="mjr" class="a" value="27"></td>
+                        <td class="td9"><input type="checkbox" name="mjr" class="a" value="28"></td>
+                      </tr>
+                      <tr class = "tr8">
+                        <td class="td1"></td>
+                        <td class="td2"></td>
+                        <td class="td3"></td>
+                        <td class="td4"><input type="checkbox" name="mjr" class="a" value="29"></td>
+                        <td class="td5"></td>
+                        <td class="td6"><input type="checkbox" name="mjr" class="a" value="30"></td>
+                        <td class="td7"><input type="checkbox" name="mjr" class="a" value="31"></td>
+                        <td class="td8"><input type="checkbox" name="mjr" class="a" value="32"></td>
+                        <td class="td9"><input type="checkbox" name="mjr" class="a" value="33"></td>
+                      </tr>
+                      <tr class = "tr9">
+                        <td class="td1"></td>
+                        <td class="td2"></td>
+                        <td class="td3"></td>
+                        <td class="td4"></td>
+                        <td class="td5"></td>
+                        <td class="td6"></td>
+                        <td class="td7"><input type="checkbox" name="mjr" class="a" value="34"></td>
+                        <td class="td8"></td>
+                        <td class="td9"><input type="checkbox" name="mjr" class="a" value="35"></td>
+                      </tr>
+                      <tr class = "tr10">
+                        <td class="td1"></td>
+                        <td class="td2"><input type="checkbox" name="mjr" class="a" value="36"></td>
+                        <td class="td3"></td>
+                        <td class="td4"></td>
+                        <td class="td5"><input type="checkbox" name="mjr" class="a" value="37"></td>
+                        <td class="td6"></td>
+                        <td class="td7"></td>
+                        <td class="td8"><input type="checkbox" name="mjr" class="a" value="38"></td>
+                        <td class="td9"><input type="checkbox" name="mjr" class="a" value="39"></td>
+                      </tr>
+
+
+
+                <!--<th rowspan="3"><input type="checkbox" id="a">과학과 기술</th>
+                <td><input type="checkbox" id="a">환경과 인간</td>
+                </tr>
+                <tr>
+                <td><input type="checkbox" id="a">우주 생명 마음</td>
+                </tr>
+                <tr>
+                <td><input type="checkbox" id="a">창업 입문</td>
+              </tr>-->
+
+
+              </tbody>
+
+                </table>
+
+
+
+          <hr></hr>
+          <li>교양과목</li>
+        <style>
+              .tb2 {
+                  width: 100%;
+                }
+                .tb2, .th22, .td22 {
+                  border: 3px solid #bcbcbc;
+                }
+          </style>
+          <form class="" action="dataContainer.js" method="get">
+          <table class ="tb2">
+              <thead>
+                <tr>
+                  <th class ="th22">구분</th>
+                  <th class ="th22" >교과목명</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr><!--첫줄-->
+                  <th class ="th22"  rowspan="3"><input type="checkbox" name="lib" class="b" value="1">기독교</th>
+                  <td class ="td22" ><input type="checkbox" name="libs" class="c" value="1">종교와 과학</td>
+                </tr>
+                <tr>
+                  <td class ="td22" ><input type="checkbox" name="libs" class="c" value="2">현대사회와 기독교 윤리</th>
+                </tr>
+                <tr>
+                  <td class ="td22" ><input type="checkbox" name="libs" class="c" value="3">기독교와 사회</th>
+                </tr>
+
+                <th class ="th22"  rowspan="2"><input type="checkbox" name="lib" class="b" value="2">사고와표현</th>
+                <td class ="td22" ><input type="checkbox" name="libs" class="c" value="4">글쓰기</td>
+              </tr>
+              <tr>
+                <td class ="td22" ><input type="checkbox" name="libs" class="c" value="5">발표와 토의</th>
+              </tr>
+
+              <th class ="th22"  rowspan="3"><input type="checkbox" name="lib" class="b" value="3">역사와 철학</th>
+              <td class ="td22" ><input type="checkbox" name="libs" class="c" value="6">철학과 인간</td>
+            </tr>
+            <tr>
+              <td class ="td22" ><input type="checkbox" name="libs" class="c" value="7">한국 근현대사의 이해</td>
+            </tr>
+            <tr>
+              <td class ="td22" ><input type="checkbox" name="libs" class="c" value="8">역사와 문명</td>
+            </tr>
+
+            <th class ="th22"  rowspan="3"><input type="checkbox" name="lib" class="b" value="4">사회와 공동체</th>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="9">세계화와 사회변화</td>
+            </tr>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="10">민주주의와 현대사회</td>
+            </tr>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="11">여성 소수자 공동체</td>
+            </tr>
+
+            <th class ="th22"  rowspan="3"><input type="checkbox" name="lib" class="b" value="5">문화</th>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="12">글로벌 문화</td>
+            </tr>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="13">예술과 창조성</td>
+            </tr>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="14">고전으로 읽는 인문학</td>
+            </tr>
+
+            <th class ="th22"  rowspan="3"><input type="checkbox" name="lib" class="b" value="6">과학과 기술</th>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="15">환경과 인간</td>
+            </tr>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="16">우주 생명 마음</td>
+            </tr>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="17">창업 입문</td>
+            </tr>
+
+            <th class ="th22"  rowspan="4"><input type="checkbox" name="lib" class="b" value="7">영어</th>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="18">영어1</td>
+            </tr>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="19">영어2</td>
+            </tr>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="20">영어회화1&3</td>
+            </tr>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="21">영어회화2&4</td>
+            </tr>
+
+            <th class ="th22"  rowspan="3"><input type="checkbox" name="lib" class="b" value="8">기초과학</th>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="22">물리학1</td>
+            </tr>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="23">물리학실험1</td>
+            </tr>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="24">일반생물학</td>
+            </tr>
+
+            <th class ="th22"  rowspan="6"><input type="checkbox" name="lib" class="b" value="9">수학</th>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="25">미적분학1</td>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="26">이산수학개론</td>
+            </tr>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="27">고급이산수학</td>
+            </tr>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="28">선형대수학개론</td>
+            </tr>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="29">공학수학</td>
+            </tr>
+            <tr>
+            <td class ="td22" ><input type="checkbox" name="libs" class="c" value="30">통계학개론</td>
+            </tr>
+            <tr>
+              <th class ="th22"  rowspan="6"><input type="checkbox" name="lib" class="b" value="10">채플</th>
+            </tr>
+
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>
+                    <input type = "button" name = "makeTable" value = "시간표 생성 " onclick = "makePop();">
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+
+
+
+
+
+
+
+        </div>
+        <!-- /.container-fluid -->
+
+        <!-- Sticky Footer -->
+        <footer class="sticky-footer">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright © Your Website 2018</span>
+            </div>
+          </div>
+        </footer>
+
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal 로그아웃 아이콘 눌렀을때 어쩌지?-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="Login.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
+
+  </body>
+
+</html>

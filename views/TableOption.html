@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      h1, table{
+        text-align:center;
+      }
+    </style>
+    <!-- 나중에는 서버에서 받아와야 할 자료 -->
+    <script src="js/dataContainer.js"></script>
+    <script type="text/javascript">
+    // 자료가 넘어 갔다고 생각하자.
+    let ckbx2 = document.getElementsByName('option');
+
+    let optarr = new Array(18);
+    for(let i=0; i<18; i++){
+      optarr[i] = '0';
+    }
+    // let mjrarr = JSON.parse(localStorage.getItem("dataA"));
+    // let libarr = JSON.parse(localStorage.getItem("dataB"));
+    // let libsarr = JSON.parse(localStorage.getItem("dataC"));
+
+    let makeDisplay = function(){
+      for(let i = 0; i < ckbx2.length; i++){
+        if(ckbx2[i].checked || ckbx2[i].selected){
+          optarr[i] = '1';
+        }
+      }
+      localStorage.setItem("Opt", JSON.stringify(optarr));
+      //여기 SelectTable로 가도록 수정했당.
+      location.href = 'MTT_OPT.html';
+    }
+    </script>
+  </head>
+  <body>
+    <h1>TableOptions.html</h1>
+
+    <form class="" action="js/dataContainer.js" method="get">
+      <ul>
+        <li><label for="mon">Mon</label>
+        <input id="mon" type="checkbox" name="option" value="Mon"></li>
+        <li><label for="tue">Tue</label>
+        <input id="tue" type="checkbox" name="option" value="Tue"></li>
+        <li><label for="wed">Wed</label>
+        <input id="wed" type="checkbox" name="option" value="Wed"></li>
+        <li><label for="thu">Thu</label>
+        <input id="thu" type="checkbox" name="option" value="Thu"></li>
+        <li><label for="fri">Fri</label>
+        <input id="fri" type="checkbox" name="option" value="Fri"></li>
+      </ul>
+      <table border="1">
+        <tbody>
+          <tr>
+            <td><li><input id="option1" type="checkbox" name="option" value="lunchTime"></li></td>
+            <td><label for="option1">점심시간 확보</label></td>
+          </tr>
+          <tr>
+            <td><li><label for="09">09~</label>
+            <input id="09" type="checkbox" name="option" value="09"></li>
+            <li><label for="10">10~</label>
+            <input id="10" type="checkbox" name="option" value="10"></li>
+            <li><label for="11">11~</label>
+            <input id="11" type="checkbox" name="option" value="11"></li>
+            <li><label for="12">12~</label>
+            <input id="12" type="checkbox" name="option" value="12"></li>
+            </td>
+            <td><label>첫 강의 시작 시간</label></td>
+          </tr>
+          <tr>
+            <td><select multiple="multiple">
+              <option name="option" value="~15">~15</option>
+              <option name="option" value="~16">~16</option>
+              <option name="option" value="~17">~17</option>
+              <option name="option" value="~18">~18</option>
+            </select></td>
+            <td><label>마지막 강의 종료 시간</label></td>
+          </tr>
+          <tr>
+            <td>
+              <select multiple="multiple">
+                <option name="option" value="Jang">Jang</option>
+                <option name="option" value="Yong">Yong</option>
+                <option name="option" value="Han">Han</option>
+              </select>
+            </td>
+            <td><label for="">교수님 선택(ctrl+클릭 : 다중선택)</label></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2"><input type="button" name="확인" value="ok" onclick="makeDisplay();"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	   <meta charset="utf-8">
+	    <title>옵션이 적용된 시간표 생성</title>
+	    <link rel="stylesheet" type="text/css" href="TTstyle.css">
+	    <script type="text/javascript">
+
+      let major = new Array(39);//(new Array(39), new Array(3));
+      let liberel = new Array(10);//10);
+      let liberels = new Array(31)//new Array(31), new Array(3));
+      let option = new Array(2);
+
+      for(let i=0;i<39;i++){
+        major[i]=new Array(3);
+      }
+      for(let i=0;i<31;i++){
+         liberels[i]=new Array(3);
+      }
+
+       //웹프            09    10   11    12    13    14    15    16    17    18    19    20
+       major[4][0] = '000001010000100000000000000000000000000000000000000000000000';
+       major[4][1] = '000000000000000000001010000100000000000000000000000000000000';
+       major[4][2] = '000000000000000000000000000000101000010000000000000000000000';
+       //고객            09    10   11    12    13    14    15    16    17    18    19    20
+       major[9][0] = '000000101001000000000000000000000000000000000000000000000000';
+       major[9][1] = '000000000000000000000101001000000000000000000000000000000000';
+       major[9][2] = '000000000000000000000000000000010100100000000000000000000000';
+       //콜로            09    10   11    12    13    14    15    16    17    18    19    20
+       major[15][0] = '000000000000000000000000000000000100001000000000000000000000';
+       major[15][1] = '000000000000000000000000000000000100001000000000000000000000';
+       major[15][2] = '000000000000000000000000000000000100001000000000000000000000';
+       //공소            09    10   11    12    13    14    15    16    17    18    19    20
+       major[20][0] = '000001010000100000000000000000000000000000000000000000000000';
+       major[20][1] = '000000000010000000000010000100000000000000000000000000000000';
+       major[20][2] = '000000000000000000001000000000001000010000000000000000000000';
+       //팀프            09    10   11    12    13    14    15    16    17    18    19    20
+       major[36][0] = '000000000000000000000000000000000000000001000010000100000000';
+       major[36][1] = '000000000000000000000000000000000000000001000010000100000000';
+       major[36][2] = '000000000000000000000000000000000000000000010000100001000000';
+
+       //교양
+
+       //채플               09    10   11    12    13    14    15    16    17    18    19    20
+       liberels[30][0] = '000000000010000000000000000000000000000000000000000000000000';
+       liberels[30][1] = '000000000001000000000000000000000000000000000000000000000000';
+       liberels[30][2] = '000000000000100000000000000000000000000000000000000000000000';
+
+       //종과               09    10   11    12    13    14    15    16    17    18    19    20
+       liberels[0][0] = '000000000000000000000000000000101000000000000000000000000000';
+       liberels[0][1] = '000000000000000000000001000010000000000000000000000000000000';
+       liberels[0][2] = '000000000000000000000001000010000000000000000000000000000000';
+
+       //발토               09    10   11    12    13    14    15    16    17    18    19    20
+       liberels[4][0] = '000000000000010010100000000000000000000000000000000000000000';
+       liberels[4][1] = '000000000000000000000101000010000000000000000000000000000000';
+       liberels[4][2] = '000000000000000000000001001010000000000000000000000000000000';
+
+       //역문               09    10   11    12    13    14    15    16    17    18    19    20
+       liberels[7][0] = '000000001001010000000000000000000000000000000000000000000000';
+       liberels[7][1] = '000000000000000000000001001010000000000000000000000000000000';
+       liberels[7][2] = '000000000000000000000001001010000000000000000000000000000000';
+
+       //글로               09    10   11    12    13    14    15    16    17    18    19    20
+       liberels[11][0] = '000000000010100100000000000000000000000000000000000000000000';
+       liberels[11][1] = '000000000000000000000000000000101001000000000000000000000000';
+       liberels[11][2] = '010100100000000000000000000000000000000000000000000000000000';
+
+       //고전               09    10   11    12    13    14    15    16    17    18    19    20
+       liberels[13][0] = '000000101001000000000000000000000000000000000000000000000000';
+       liberels[13][1] = '000001000010100000000000000000000000000000000000000000000000';
+       liberels[13][2] = '000001000010100000000000000000000000000000000000000000000000';
+
+       //여성               09    10   11    12    13    14    15    16    17    18    19    20
+       liberels[10][0] = '000001000010100000000000000000000000000000000000000000000000';
+       liberels[10][1] = '000000000000000000001010010000000000000000000000000000000000';
+       liberels[10][2] = '000000000000000000000000000100101000000000000000000000000000';
+
+       //선형               09    10   11    12    13    14    15    16    17    18    19    20
+       liberels[27][0] = '101001000000000000000000000000000000000000000000000000000000';
+       liberels[27][1] = '000000000000000000000000000000101001000000000000000000000000';
+       liberels[27][2] = '000000001001010000000000000000000000000000000000000000000000';
+
+       option [0] = '000000000000000111110000000000000000000000000000000000000000';
+       option [1] = '111110000000000000000000000000000000000000000000000000000000';
+
+       // 전공, 교양 대분류, 교양 소분류
+       let mjr_name = ["C언어프로그래밍", "자료구조", "알고리즘", "SW아키텍처",
+       "웹프로그래밍", "데이터베이스", "데이터베이스설계",
+       "객체지향프로그래밍1", "객체지향프로그래밍2", "고급객체지향프로그래밍", "소프트웨어공학", "시스템프로그래밍", "엔터프라이즈컴퓨팅", "네트워크컴퓨팅",
+       "C언어연습", "컴퓨터공학콜로키움", "운영체제", "임베디드시스템", "컴퓨터그래픽스", "영상컴퓨팅",
+       "공개SW실무", "시스템분석및설계", "컴퓨터공학특론1", "컴퓨터공학특론2",
+       "컴퓨터네트워크", "프로그래밍언어", "자기주도학습2", "모바일프로그래밍",
+       "컴퓨터하드웨어", "컴퓨터아키텍처", "멀티미디어", "컴퓨터보안", "인공지능",
+       "자기주도학습1", "IBM현장실무교육",
+       "공학입문설계", "팀프로젝트1", "캡스톤디자인1", "캡스톤디자인2"];
+
+       let opt_name = ["9시공강","점심시간"];
+       let lib_name = ["기독교", "사고와표현", "역사와철학", "사회와공동체", "문화",
+       "과학과기술", "영어", "기초과학", "수학", "채플"];
+
+       let libs_name = ["종교와과학", "현대사회와기독교윤리", "기독교와사회",
+       "글쓰기", "발표와토의",
+       "철학과인간", "한국근현대사의이해", "역사와문명",
+       "세계화와사회변화", "민주주의와현대사회", "여성소수자공동체",
+       "글로벌문화", "예술과창조성", "고전으로읽는인문학",
+       "환경과인간", "우주생명마음", "창업입문",
+       "영어1", "영어2", "영어회화1&3", "영어회화2&4",
+       "물리학1", "물리학실험1", "일반생물학",
+       "미적분학1", "이산수학개론", "고급이산수학", "선형대수학개론", "공학수학", "통계학개론", "채플"];
+
+       // let TestMjr =new Array();
+       // let TestLib =new Array();
+       // let TestLibs =new Array();
+       let TestMjr = JSON.parse(localStorage.getItem("dataA"));
+       let TestLib = JSON.parse(localStorage.getItem("dataB"));
+       let TestLibs = JSON.parse(localStorage.getItem("dataC"));
+       let optarr = JSON.parse(localStorage.getItem("Opt"));
+      //  TestMjr = ['0','0','0','0','1','0','0','0','0','1','0','0','0','0','0','0',
+      //               '0','0','0','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1','0','0'];
+      // TestLibs= ['0','0','0','0','0','0','0','0','0','0','0','0','0','1','0','0',
+      // '0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
+      // TestLib=['0','0','1','0','0','0','0','0','0','0'];
+      // TestMjr = mjrarr;
+      // TestLibs = libsarr;
+      // Testlib = libarr;
+      //let TestOpt1='111110000000000000000000000000000000000000000000000000000000';
+
+       let Cate = new Array(); // 넘겨받은 정보를 카테고리별로 분류받아 저장
+
+      Cate[0]=new Array();    // [a][b] a는 카테고리 수, b는 카테고리내 과목
+      Cate[1]=new Array();
+      Cate[2]=new Array();
+      Cate[3]=new Array();
+      Cate[4]=new Array();
+      Cate[5]=new Array();
+      Cate[6]=new Array();
+      Cate[7]=new Array();
+      Cate[8]=new Array();
+      Cate[9]=new Array();
+
+      let Soption="11";
+
+      function MakeRandom(min, max){
+        let RandVal = Math.random() * (max- min+1) + min;
+        return Math.floor(RandVal);
+      }
+
+      function GyoYang(a,b,j){
+        let i;
+        i=MakeRandom(a,b);
+        Cate[j]=liberels[i];
+        lst[j+1]=(lst[j+1]+1)*(liberels[i].length);
+        j++;
+      }
+
+      function GetData(){
+       let i=0,j=0;
+       //전공넣기 -이름처리완료
+       for(i=0;i<39;i++){
+         if(TestMjr[i] == 1){
+           Cate[j]=major[i];
+           lst[j+1]=(lst[j+1]+1)*(major[i].length);
+           j++;
+         }
+         else{
+           continue;
+         }
+
+       }
+       //교양 소분류 처리 -
+       for(i=0;i<31;i++){
+         if(TestLibs[i] == 1){
+           Cate[j]=liberels[i];
+           lst[j+1]=(lst[j+1]+1)*(liberels[i].length);
+           j++;
+         }
+         else{
+           continue;
+         }
+       }
+
+      if(TestLib[0]==1){
+        i=MakeRandom(0,2);
+        Cate[j]=liberels[i];
+        lst[j+1]=(lst[j+1]+1)*(liberels[i].length);
+        TestLibs[i]=1;
+        j++;
+      }else if(TestLib[1]==1){
+        i=MakeRandom(3,4);
+        Cate[j]=liberels[i];
+        lst[j+1]=(lst[j+1]+1)*(liberels[i].length);
+          TestLibs[i]=1;
+        j++;
+      }else if(TestLib[2]==1){
+        i=MakeRandom(5,7);
+        Cate[j]=liberels[i];
+        lst[j+1]=(lst[j+1]+1)*(liberels[i].length);
+          TestLibs[i]=1;
+        j++;
+      }else if(TestLib[3]==1){
+        i=MakeRandom(8,10);
+        Cate[j]=liberels[i];
+        lst[j+1]=(lst[j+1]+1)*(liberels[i].length);
+          TestLibs[i]=1;
+        j++;
+      }else if(TestLib[4]==1){
+        i=MakeRandom(11,13);
+        Cate[j]=liberels[i];
+        lst[j+1]=(lst[j+1]+1)*(liberels[i].length);
+          TestLibs[i]=1;
+        j++;
+      }else if(TestLib[5]==1){
+        i=MakeRandom(14,16);
+        Cate[j]=liberels[i];
+        lst[j+1]=(lst[j+1]+1)*(liberels[i].length);
+          TestLibs[i]=1;
+        j++;
+      }else if(TestLib[6]==1){
+        i=MakeRandom(17,20);
+        Cate[j]=liberels[i];
+        lst[j+1]=(lst[j+1]+1)*(liberels[i].length);
+          TestLibs[i]=1;
+        j++;
+
+      }else if(TestLib[7]==1){
+        i=MakeRandom(21,23);
+        Cate[j]=liberels[i];
+        lst[j+1]=(lst[j+1]+1)*(liberels[i].length);
+          TestLibs[i]=1;
+        j++;
+      }else if(TestLib[8]==1){
+        i=MakeRandom(24,29);
+        Cate[j]=liberels[i];
+        lst[j+1]=(lst[j+1]+1)*(liberels[i].length);
+          TestLibs[i]=1;
+        j++;
+      }else if(TestLib[9]==1){
+        i=30;
+        Cate[j]=liberels[i];
+        lst[j+1]=(lst[j+1]+1)*(liberels[i].length);
+
+        j++;
+      }
+
+
+
+
+       for(i=9;i>0;i--){
+         Cate[i+1]=Cate[i];
+       }
+       Cate[0]='';
+       //document.write(Cate);
+       //document.write(lst);
+     }
+
+
+       let Tdate='000000000000000000000000000000000000000000000000000000000000'; //시간
+       let SubName = new Array();
+       SubName=["",]; // 과목명
+
+      function Comb(){
+       let i;
+       for(i=0;i<39;i++){
+         if(TestMjr[i]== '1'){
+           SubName.push(mjr_name[i]);
+         }
+       }
+       for(i=0;i<31;i++){
+         if(TestLibs[i]== '1'){
+           SubName.push(libs_name[i]);
+         }
+       }
+       //document.write(SubName);
+
+       // 2. Tdate=ArrTdate[i]로 저장하는 코드
+       // 3. Tdate랑 SubName을 로컬저장소로 저장하는 코드
+       localStorage.setItem("local_SubName", JSON.stringify(SubName));
+       //alert("local에 subname " + SubName);
+     }
+
+     let ctm = new Array(); // 카테고리 묶기 및 최종 문자열 생성에 쓰임
+     ctm=['000000000000000000000000000000000000000000000000000000000000',
+      '000000000000000000000000000000000000000000000000000000000000',
+      '000000000000000000000000000000000000000000000000000000000000',
+      '000000000000000000000000000000000000000000000000000000000000',
+      '000000000000000000000000000000000000000000000000000000000000',
+      '000000000000000000000000000000000000000000000000000000000000',
+      '000000000000000000000000000000000000000000000000000000000000',
+      '000000000000000000000000000000000000000000000000000000000000',
+      '000000000000000000000000000000000000000000000000000000000000'];
+
+
+    let lst = new Array();
+    lst=[0,0,0,0,0,0,0,0,0];
+
+        function mixing(a,b){ //두 문자열을 더해주는 함수
+          let i;
+          let mix='';
+          let ta=''+a;
+          let tb=''+b;
+          for(i=0;i<59;i++){
+          mix = mix + ((ta.substring(i,i+1))|(tb.substring(i,i+1)));
+          }
+          return mix;
+        }
+
+        function OverLap(a,b){ // 두 문자열을 곱해주는 함수
+          //alert(3);
+          let i;
+          let over1='';
+          let over2='';
+          let ta=''+a;
+          let tb=''+b;
+          for(i=0;i<59;i++){
+
+            over1 = ((ta.substring(i,i+1)) & (tb.substring(i,i+1)));
+            //document.write(over1+  '\n')
+            over2 = over2 + over1;//((over1) | (over2.substring(i,i+1)));
+
+          }
+          //document.write(over2+' over2 \n');
+          return over2;
+        }
+
+        function OverLap2(a){ // 한 문자열 내에 1이 있는지 검증하여 돌려주는 함수
+          //alert(3);
+          let i;
+          let over1='0';
+          let over2='0';
+          let ta=''+a;
+          for(i=0;i<59;i++){
+
+            over1=(ta.substring(i,i+1));
+
+            over2 = ((over1) | (over2));
+            //document.write(over1);
+            //document.write(over2 +'\n');
+          }
+          return over2;
+          //document.write(over2);
+          //return over;
+        }
+        function min(a,b){
+          let i;
+          for(i=0;i<59;i++){
+            if(a.substring(i,i+1) == b.substring(i,i+1)){
+              if(a.substring(i,i+1)==1){
+                a = a.substring(0,i)+'0'+a.substring(i,59);
+              }
+            }
+
+          }
+          return a;
+        }
+        let ctm2 =new Array();
+        ctm2[0]=new Array();
+        ctm2[1]=new Array();
+        ctm2[2]=new Array();
+        ctm2[3]=new Array();
+        ctm2[4]=new Array();
+
+
+        function TagPlus(tag,t){
+          let i,j,k;
+          k=parseInt(t);
+          let str='';
+          for(i=0;i<10;i++){
+            tag[i]=0;
+          }
+          while(k > 1){
+            str = str + parseInt(k%3);
+            k=parseInt(k/3);
+          }
+          str=str+k;
+          //str=str.split("");
+          for(let i=0;i<(str.length);i++){
+              tag[i]=str.substring(i,i+1);
+            }
+          tag.pop();
+          //document.write(tag);
+        }
+        function CheckOver(a){ //01만으로 이루어 졌는지
+          let i=0;
+          let Ov=0;
+          let tmp=0;
+          for(i=0;i<59;i++){
+            tmp = parseInt(a.substring(i,i+1));
+            //tmp =tmp-1;
+            if(tmp >1 ){
+              Ov=1;
+            }
+
+          }
+
+          document.write('\n');
+          return Ov;
+        }
+        function Plus(a,b){ //두 문자열을 숫자처럼 더해줌 함수 그만짜고싶다
+          let i=0;
+          let tmp='';
+          let ta,tb;
+          let t1,t2,t3;
+          if(b == NaN){
+            return a;
+          }
+          //if(b = undefine){}
+          ta=a+'';
+          tb=b+'';
+          for(i=0;i<59;i++){
+            t1 = parseInt(ta.substring(i,i+1));
+            t2 = parseInt(tb.substring(i,i+1));
+            t3=t1+t2;
+            tmp=tmp +t3.toString();
+          }
+          return tmp;
+        }
+
+        function CheckOpt(){
+          let temp1='0'; //옵션저장
+          let temp2='0';
+          let temp3='0';
+          let temp4='000000000000000000000000000000000000000000000000000000000000';
+          let temp5='';
+          let temp6='';
+          let i,j;
+          let k=0;
+          let l=0;
+
+          if(Soption == '00'){
+            temp1='000000000000000000000000000000000000000000000000000000000000';
+          }else if(Soption =='01'){
+            temp1=option[1];
+          }else if(Soption == '10'){
+            temp1=option[0];
+          }else if(Soption == '11'){
+            temp1 = mixing(option[0],option[1]);
+          }
+          //
+           //temp1고정
+          let tag = new Array();
+          tag = [0,0,0,0,0,0,0,0,0,0];
+
+          for(j=0;j<1900;j++){//19683;j++){
+            TagPlus(tag,j);
+            temp4 = temp1;
+            for(i=0;i<9;i++){
+              //TagPlus(tag,j);
+              if(Cate[i][tag[i]] != undefined){
+                ctm[i]=Cate[i][tag[i]];
+                temp2=Cate[i][tag[i]];
+                temp4 = Plus(temp4,temp2);
+              }
+            }
+
+            temp3 = CheckOver(temp4);
+            if(temp3 == '0'){
+              if(ctm != ctm2[k-1]){
+                ctm2[k]=ctm;
+
+                ctm=['000000000000000000000000000000000000000000000000000000000000',
+                    '000000000000000000000000000000000000000000000000000000000000',
+                    '000000000000000000000000000000000000000000000000000000000000',
+                    '000000000000000000000000000000000000000000000000000000000000',
+                    '000000000000000000000000000000000000000000000000000000000000',
+                    '000000000000000000000000000000000000000000000000000000000000',
+                    '000000000000000000000000000000000000000000000000000000000000',
+                    '000000000000000000000000000000000000000000000000000000000000',
+                    '000000000000000000000000000000000000000000000000000000000000'];
+                    k++;
+                  }
+            }
+            else if(temp3 == '1'){
+              ctm=['000000000000000000000000000000000000000000000000000000000000',
+                   '000000000000000000000000000000000000000000000000000000000000',
+                   '000000000000000000000000000000000000000000000000000000000000',
+                   '000000000000000000000000000000000000000000000000000000000000',
+                   '000000000000000000000000000000000000000000000000000000000000',
+                   '000000000000000000000000000000000000000000000000000000000000',
+                   '000000000000000000000000000000000000000000000000000000000000',
+                   '000000000000000000000000000000000000000000000000000000000000',
+                   '000000000000000000000000000000000000000000000000000000000000'];
+            }
+          }
+        }
+
+
+        let ArrTdate = new Array();
+        //Tdate의 배열
+        function MakeTT2(){
+          let i,j,k;
+          let tmpTdate1='';
+          let tmpTdate2='';
+          let tmpctm2='';
+
+          for(i=0;i<5;i++){
+            tmpTdate2='';
+            for(j=1;j<9;j++){
+              tmpctm2 = ctm2[i][j]+'';
+              tmpTdate1='';
+              for(k=0;k<59;k++){
+                tmpTdate1 = tmpTdate1 + ((tmpTdate1.substring(k,k+1))|(tmpctm2.substring(k,k+1)*j));
+              }
+              tmpTdate2=mixing(tmpTdate2,tmpTdate1);
+            }
+            ArrTdate[i] = tmpTdate2;
+            ArrTdate[i] = ArrTdate[i]+'0';
+          }
+        }
+
+
+
+
+        function CreateTT(Tdate,SubName){ // 데이터와 과목이름을 넘겨받아 시간표 생성함수
+                                          // 잘돌아감
+            //<table>
+            //<tr> 표의 각 단 앞머리 =줄수표시
+            //<td> 각 줄을 가로로 채워 나간다
+            document.write("<table>");
+            document.write("<tr>");
+            document.write("<td></td>");
+            document.write("<td class = td9>월</td>");
+            document.write("<td class = td9>화</td>");
+            document.write("<td class = td9>수</td>");
+            document.write("<td class = td9>목</td>");
+            document.write("<td class = td9>금</td>");
+            document.write("</tr>");
+            //////////////////////////////////
+            let i,j,m,k,l;
+            m=9;
+            l=1;
+            k=0;
+            for(i=0;i<12;i++){
+              document.write("<tr>");
+              document.write("<td class = td10>"+m+"</td>");
+              if(m>=12){m=m-12;}
+              m++;
+              for(j=0;j<5;j++){
+              document.write("<td class = td" + Tdate.toString().substring(k,l) + ">" + SubName[Tdate.toString().substring(k,l)]+"</td>");
+              //  num++;
+              k++;
+              l++;
+              }
+
+              document.write("</tr>");
+            }
+        }
+
+        GetData();
+        Comb();
+        CheckOpt();
+        MakeTT2();
+
+
+        // 1.  278 : localStorage.setItem("local_SubName", JSON.stringify(SubName));  >>localStorage에 local_SubName저장
+        // 2. main.131: localStorage에서 local_SubName가져오기
+        // 3. 692 : localStorage.setItem("local_Tdate", ArrTdate[localStorage.getItem("sel_value")]);  >>localStorage에 현재 선택된 시간표 저장
+
+
+
+        //>>main으로 넘어가는 함쑤
+
+
+        window.onload = function(){ // display창 동적 구현
+
+        document.write('<table border="1" style="display: inline-block;">');
+        document.write('<thead><h1>시간표 생성</h1></thead>');
+        document.write('<tbody>');
+        document.write('<tr>');
+        document.write('<td><select size="10" name="optionG" onchange="selectEvent();">');
+        for (var i = 0; i < 5; i++) {
+          document.write('<option value='+i+' name="timeSelect">['+i+']</option>');
+        }
+        document.write('</select></td>');
+        alert(localStorage.getItem("choice"));
+
+        if (localStorage.getItem("choice") == false || localStorage.getItem("choice") == null) {
+          document.write('<td id = "dest">select box에서 원하는 시간표를 선택하세요</td>');
+        }
+        else {
+          document.write('<td>');
+
+          CreateTT(ArrTdate[localStorage.getItem("sel_value")],SubName);
+          let zzz = ArrTdate[localStorage.getItem("sel_value")];
+          localStorage.setItem("local_Tdate",zzz);
+          ///////////////////////////////////////////////////////////////////////////////////////////
+          //이부분이 수정이 필요한 부분입니다  ArrTdate[localStorage.getItem("sel_value")] 가 "local_Tdate 의 이름으로 저장되어야합니다
+
+          document.write('</td>');
+        }
+        document.write('</tr>');
+        document.write('</tbody>');
+        document.write('<tfoot>');
+        document.write('<tr>');
+        document.write('<form action="makesc" method="post" >');
+        //<!-- DB로 데이터를 보내기 위해 tdate와 subname을 서버로 보냄-->
+        document.write('<input type="hidden" name="tdate" value='+localStorage.getItem('local_Tdate')+'>');
+        document.write('<input type="hidden" name="subname" value='+localStorage.getItem("local_SubName")+'>');
+        document.write('<td colspan="3"><input type="submit" name="" value="Create" onClick="goBack();" ></td></tr>');
+        document.write('</form>');
+        document.write('</tfoot>');
+        document.write('</table>');
+
+        localStorage.removeItem("sel_value");
+        localStorage.removeItem("choice");
+
+      }
+
+
+
+
+
+      let goBack = function(){
+     //  for (let i = 0; i < rad.length; i++) {
+     //    if(rad[i].checked){
+     //     alert((i+1) + "번 째 시간표를 생성한다.");
+     //     localStorage.setItem("Rad", i);
+     //    }
+     // }
+    //  opener.location = "Main.html";
+      setTimeout("self.close()",1000);
+      //self.close();
+      }
+
+      let selectEvent = function(){
+        localStorage.setItem("choice", true);
+        chosen_sel = document.getElementsByName('timeSelect');
+        //alert(localStorage.sel_i);
+        for (let i in chosen_sel) {
+          if (chosen_sel[i].selected) {
+            //alert(localStorage.sel_i[v]);
+            localStorage.setItem("sel_value",chosen_sel[i].value);
+            //alert(localStorage.i);
+          }
+        }
+        window.location.reload(true);
+      }
+
+/*
+흐름
+Curriclum.html  ->  TableOption.html  -> MTT_OPT.html  ->  main.html
+
+
+585 : localStorage.setItem("local_Tdate",zzz);
+278 : localStorage.setItem("local_SubName", JSON.stringify(SubName));
+
+이 두 변수가 데이터 베이스에 저장되어야 하며  Main.html에서 불러올수 있어야 한다
+main :131 ,133
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       </script>
+  </head>
+  <body>
+  </body>
+</html>
