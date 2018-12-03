@@ -24,7 +24,7 @@ db.on('error',console.error);
 db.once('open',function(){
   console.log("MongoDB gogo");
 });
-mongo.connect('mongodb://localhost/cschedule');
+mongo.connect('mongodb://Kim:tjsvndrl12!@ds117111.mlab.com:17111/heroku_2qlq7d7l');
 
 
 
