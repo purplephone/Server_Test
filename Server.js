@@ -24,7 +24,7 @@ db.on('error',console.error);
 db.once('open',function(){
   console.log("MongoDB gogo");
 });
-mongo.connect('mongodb://Kim:tjsvndrl12!@ds117111.mlab.com:17111/heroku_2qlq7d7l');
+mongo.connect('mongodb://Kim:tjsvndrl12!@ds111895.mlab.com:11895/heroku_mdj8w33x');
 
 
 
